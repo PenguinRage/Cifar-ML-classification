@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# tar extensions - Stops us from adding the batch files.
+*.tar
+
 # Distribution / packaging
 .Python
 env/
