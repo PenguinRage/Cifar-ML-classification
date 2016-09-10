@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # tar extensions - Stops us from adding the batch files.
-*.tar
+*.gz
 
 # Distribution / packaging
 .Python
