@@ -9,6 +9,7 @@ __pycache__/
 *.swp
 # tar extensions - Stops us from adding the batch files.
 *.gz
+cifar-10-batches-py/
 
 # Distribution / packaging
 .Python
