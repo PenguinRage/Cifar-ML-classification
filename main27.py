@@ -6,7 +6,7 @@ import scipy
 def load_CIFAR_batch(file):
     """ load single batch of cifar"""
     with open(file, 'rb') as f:
-        datadict = pickle.load(f, encoding = 'latin1')
+        datadict = pickle.load(f)
         X = datadict['data']
         Y = datadict['labels']
         X = X.reshape(10000,3,32,32).transpose(0,2,3,1).astype("float")
@@ -26,6 +26,10 @@ def load_CIFAR10(ROOT):
     Ytr = np.concatenate(ys)
     del X,Y
     Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
+    """
+    Xtr, Ytr = training data
+    Xte, Yte = testing data
+    """
     return Xtr, Ytr, Xte, Yte
 
 
