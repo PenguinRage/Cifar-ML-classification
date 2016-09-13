@@ -1,5 +1,5 @@
 import numpy as np
-import _pickle as pickle
+import cPickle as pickle
 import os
 import scipy
 
