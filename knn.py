@@ -25,7 +25,9 @@ class NearestNeighbour(object):
         # Loop over all test rows
         for i in range(num_test):
             # using the L1 distance (sum of absolute)
-            distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
+            #distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
+            # using Euclidean Distances
+            distances = np.sqrt(np.sum((self.Xtr[i,:]-X[i,:])**2))
             # get the index with smallest distance
             min_index = np.argmin(distances)
             # predict the label of the nearest example
