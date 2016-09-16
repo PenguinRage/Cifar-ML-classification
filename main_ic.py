@@ -42,14 +42,26 @@ def run_knn():
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows become 50000x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3) # Xtr_rows become 10000x 3072
 
-    nn = NearestNeighbour() # create a Nearest Neighbor classifier class
-    nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
-    Yte_predict = nn.predict(Xte_rows) # predict labels on the test images
-    # and now print the classification accuracy, which is the average number
-    # of examples that are correctly predicted (i.e label matches)
-    print ( 'accuracy: %f' % (np.mean(Yte_predict == Yte)))
+    # assume we have Xtr_rows, Ytr, Xte_rows, Yte as before
+    # recall Xtr_rows is 50,000 x 3072 matrix
+    Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
+    Yval = Ytr[:1000]
+    Xtr_rows = Xtr_rows[1000:,:] # keep last 49,000 for train
+    Ytr = Ytr[1000:]
 
+    validation_accuracies = []
+    for k in [1, 3, 5, 10, 20, 50, 100]:
 
+        nn = NearestNeighbour() # create a Nearest Neighbor classifier class
+        nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
+        Yte_predict = nn.predict(Xte_rows, k = k) # predict labels on the test images
+        # and now print the classification accuracy, which is the average number
+        # of examples that are correctly predicted (i.e label matches)
+        acc = np.mean(Yte_predict == Yte)
+        print ( 'K-NN %d' % (k))
+        print ( 'accuracy: %f' % (acc))
+
+        validation_accuracies.append((k, acc))
 
 if __name__ == '__main__':
     run_knn()
