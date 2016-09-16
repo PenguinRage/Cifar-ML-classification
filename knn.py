@@ -26,7 +26,9 @@ class NearestNeighbour(object):
         for i in range(num_test):
             # using the L1 distance (sum of absolute)
             distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
-            
+
+            if (k == 1):
+                min_index = np.argmin(distances)
             # sort the distance
             min_index = np.argsort(distances)
 
