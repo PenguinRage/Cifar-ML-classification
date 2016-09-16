@@ -17,7 +17,6 @@ class NearestNeighbour(object):
         
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
-
         
         # Lets make sure that the output type matches the input type
         Ypred = np.zeros(num_test, dtype = self.ytr.dtype)
@@ -29,6 +28,9 @@ class NearestNeighbour(object):
 
             if (k == 1):
                 min_index = np.argmin(distances)
+                Ypred[i] = self.ytr[min_index]
+                return Ypred
+
             # sort the distance
             min_index = np.argsort(distances)
 

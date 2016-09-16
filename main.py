@@ -44,10 +44,10 @@ def run_knn():
 
     # assume we have Xtr_rows, Ytr, Xte_rows, Yte as before
     # recall Xtr_rows is 50,000 x 3072 matrix
-    Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
-    Yval = Ytr[:1000]
-    Xtr_rows = Xtr_rows[1000:,:] # keep last 49,000 for train
-    Ytr = Ytr[1000:]
+    # Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
+    # Yval = Ytr[:1000]
+    # Xtr_rows = Xtr_rows[1000:,:] # keep last 49,000 for train
+    # Ytr = Ytr[1000:]
 
     validation_accuracies = []
     for k in [1,3,5,10]:
