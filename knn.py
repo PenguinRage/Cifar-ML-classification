@@ -60,5 +60,5 @@ class NearestNeighbour(object):
             # predict the label of the nearest example
             Ypred[i] = np.argmax(classes)
             
-            print(Ypred[i])
+            # print(Ypred[i])
         return Ypred
