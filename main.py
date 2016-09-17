@@ -79,7 +79,7 @@ def results(Y_pred, Yte):
             elif (Y_pred[i] == 3):
                 incorrect[3] = incorrect[3] + 1
             elif (Y_pred[i] == 4):
-                correct[4] = incorrect[4] + 1
+                incorrect[4] = incorrect[4] + 1
             elif (Y_pred[i] == 5):
                 incorrect[5] = incorrect[5] + 1
             elif (Y_pred[i] == 6):
