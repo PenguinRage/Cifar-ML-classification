@@ -50,7 +50,7 @@ def run_knn():
     # Ytr = Ytr[1000:]
 
     validation_accuracies = []
-    for k in [1]:
+    for k in [10]:
         nn = NearestNeighbour() # create a Nearest Neighbor classifier class
         nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
         Yte_predict = nn.predict(Xte_rows, k) # predict labels on the test images

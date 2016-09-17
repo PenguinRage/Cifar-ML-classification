@@ -33,7 +33,7 @@ class NearestNeighbour(object):
                 continue
 
             # sort the distance
-            min_index = np.argsort(distances)
+            min_index = np.argsort(distances, 1,'mergesort')
 
             # K-Nearest component
             classes = np.zeros(10)
