@@ -26,10 +26,10 @@ class NearestNeighbour(object):
             # using the L1 distance (sum of absolute)
             distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
 
-            if (k == 1):
-                min_index = np.argmin(distances)
-                Ypred[i] = self.ytr[min_index]
-                return Ypred
+            # if (K == 1):
+            #    min_index = np.argmin(distances)
+             #   Ypred[i] = self.ytr[min_index]
+             #   return Ypred
 
             # sort the distance
             min_index = np.argsort(distances)
