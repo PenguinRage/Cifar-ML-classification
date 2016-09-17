@@ -47,49 +47,14 @@ def results(Y_pred, Yte):
     incorrect = np.zeros(10)
 
     # count correct and incorrect predictions
+
     for i in range(k):
-        if (Y_pred[i] == Yte[i]):
-            if (Y_pred[i] == 0):
-                correct[0] = correct[0] + 1
-            elif (Y_pred[i] == 1):
-                correct[1] = correct[1] + 1
-            elif (Y_pred[i] == 2):
-                correct[2] = correct[2] + 1
-            elif (Y_pred[i] == 3):
-                correct[3] = correct[3] + 1
-            elif (Y_pred[i] == 4):
-                correct[4] = correct[4] + 1
-            elif (Y_pred[i] == 5):
-                correct[5] = correct[5] + 1
-            elif (Y_pred[i] == 6):
-                correct[6] = correct[6] + 1
-            elif (Y_pred[i] == 7):
-                correct[7] = correct[7] + 1
-            elif (Y_pred[i] == 8):
-                correct[8] = correct[8] + 1
-            elif (Y_pred[i] == 9):
-                correct[9] = correct[9] + 1
+        if Y_pred[i] == Yte[i]:
+            correct[Yte[i]] = correct[Yte[i]] + 1
         else:
-            if (Y_pred[i] == 0):
-                incorrect[0] = incorrect[0] + 1
-            elif (Y_pred[i] == 1):
-                incorrect[1] = incorrect[1] + 1
-            elif (Y_pred[i] == 2):
-                incorrect[2] = incorrect[2] + 1
-            elif (Y_pred[i] == 3):
-                incorrect[3] = incorrect[3] + 1
-            elif (Y_pred[i] == 4):
-                incorrect[4] = incorrect[4] + 1
-            elif (Y_pred[i] == 5):
-                incorrect[5] = incorrect[5] + 1
-            elif (Y_pred[i] == 6):
-                incorrect[6] = incorrect[6] + 1
-            elif (Y_pred[i] == 7):
-                incorrect[7] = incorrect[7] + 1
-            elif (Y_pred[i] == 8):
-                incorrect[8] = incorrect[8] + 1
-            elif (Y_pred[i] == 9):
-                incorrect[9] = incorrect[9] + 1
+            incorrect[j] = incorrect[j] + 1
+
+
 
     print("correct :")
 
