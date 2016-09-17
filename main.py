@@ -37,16 +37,72 @@ def load_CIFAR10(ROOT):
 
 
 def results(Y_pred, Yte):
-    # Y_pred should have all the predictions we calculated using kNN
-    # Yte should have all the actual results
-    # This function must print out the results
+    # labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-    # correct predictions are where Y_pred == Yte
-    correct = np.sum(Y_pred == Yte)
-    print ('Tolal Correct Predictions' %  correct)
-    # incorrect predictions are total - correct
-    testSum = np.sum(Yte)
-    print ('incorrect predictions' % testSum - correct)
+    # in testing each class has 1000
+
+    k = len(Yte)
+
+    correct = np.zeros(10)
+    incorrect = np.zeros(10)
+
+    # count correct and incorrect predictions
+    for i in range(k):
+        if (Y_pred[i] == Yte[i]):
+            if (Y_pred[i] == 0):
+                correct[0] = correct[0] + 1
+            elif (Y_pred[i] == 1):
+                correct[1] = correct[1] + 1
+            elif (Y_pred[i] == 2):
+                correct[2] = correct[2] + 1
+            elif (Y_pred[i] == 3):
+                correct[3] = correct[3] + 1
+            elif (Y_pred[i] == 4):
+                correct[4] = correct[4] + 1
+            elif (Y_pred[i] == 5):
+                correct[5] = correct[5] + 1
+            elif (Y_pred[i] == 6):
+                correct[6] = correct[6] + 1
+            elif (Y_pred[i] == 7):
+                correct[7] = correct[7] + 1
+            elif (Y_pred[i] == 8):
+                correct[8] = correct[8] + 1
+            elif (Y_pred[i] == 9):
+                correct[9] = correct[9] + 1
+        else:
+            if (Y_pred[i] == 0):
+                incorrect[0] = correct[0] + 1
+            elif (Y_pred[i] == 1):
+                correct[1] = correct[1] + 1
+            elif (Y_pred[i] == 2):
+                correct[2] = correct[2] + 1
+            elif (Y_pred[i] == 3):
+                correct[3] = correct[3] + 1
+            elif (Y_pred[i] == 4):
+                correct[4] = correct[4] + 1
+            elif (Y_pred[i] == 5):
+                correct[5] = correct[5] + 1
+            elif (Y_pred[i] == 6):
+                correct[6] = correct[6] + 1
+            elif (Y_pred[i] == 7):
+                correct[7] = correct[7] + 1
+            elif (Y_pred[i] == 8):
+                correct[8] = correct[8] + 1
+            elif (Y_pred[i] == 9):
+                correct[9] = correct[9] + 1
+
+    print("correct :")
+
+    # print out the percentage of correct predictions
+    for i in range(len(correct)):
+        print((correct[i] / 1000) * 100)
+
+    print("incorrect :")
+
+    # print out the percentage of incorrect predictions
+    for i in range(len(incorrect)):
+        print((incorrect[i] / 1000) * 100)
+
 
 def run_knn():
     Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
