@@ -55,13 +55,6 @@ def run_knn():
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows become 50000x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3) # Xtr_rows become 10000x 3072
 
-    # assume we have Xtr_rows, Ytr, Xte_rows, Yte as before
-    # recall Xtr_rows is 50,000 x 3072 matrix
-    # Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
-    # Yval = Ytr[:1000]
-    # Xtr_rows = Xtr_rows[1000:,:] # keep last 49,000 for train
-    # Ytr = Ytr[1000:]
-
     validation_accuracies = []
     for k in [10]:
         nn = NearestNeighbour() # create a Nearest Neighbor classifier class
