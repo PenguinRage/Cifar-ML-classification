@@ -35,6 +35,19 @@ def load_CIFAR10(ROOT):
     Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
     return Xtr, Ytr, Xte, Yte
 
+
+def results(Y_pred, Yte):
+    # Y_pred should have all the predictions we calculated using kNN
+    # Yte should have all the actual results
+    # This function must print out the results
+
+    # correct predictions are where Y_pred == Yte
+    correct = np.sum(Y_pred == Yte)
+    print ('Tolal Correct Predictions' %  correct)
+    # incorrect predictions are total - correct
+    testSum = np.sum(Yte)
+    print ('incorrect predictions' % testSum - correct)
+
 def run_knn():
     Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
     
@@ -62,5 +75,9 @@ def run_knn():
 
         validation_accuracies.append((k, acc))
 
+    # return the predictions and the actual values
+    return Yte_predict, Yte
+
 if __name__ == '__main__':
-    run_knn()
+    Y_pred, Yte = run_knn()
+    results(Y_pred,Yte)
