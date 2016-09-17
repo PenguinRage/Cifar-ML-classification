@@ -52,7 +52,7 @@ def results(Y_pred, Yte):
         if Y_pred[i] == Yte[i]:
             correct[Yte[i]] = correct[Yte[i]] + 1
         else:
-            incorrect[i] = incorrect[i] + 1
+            incorrect[Yte[i]] = incorrect[Yte[i]] + 1
 
 
 
