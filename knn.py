@@ -13,7 +13,7 @@ class NearestNeighbour(object):
         self.Xtr = X
         self.ytr = y
 
-    def predict(self, X, K):
+    def predict(self, X, K, Yte):
         labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
@@ -25,7 +25,7 @@ class NearestNeighbour(object):
         for i in range(num_test):
             # using the L1 distance (sum of absolute)
             distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
-
+ 
             if (K == 1):
                 min_index = np.argmin(distances)
                 Ypred[i] = self.ytr[min_index]
@@ -64,7 +64,7 @@ class NearestNeighbour(object):
             
             # predict the label of the nearest example
             Ypred[i] = np.argmax(classes)
-            print("Test case " + str(i) + ": \t Predicted label is:" + labels[Ypred[i]])
+            print("Test case " + str(i) + ": \t Predicted label is:" + labels[Ypred[i]] + " \t Expected label: " + labels[Yte[i]])
 
             # print(Ypred[i])
         return Ypred

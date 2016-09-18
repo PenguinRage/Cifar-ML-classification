@@ -20,7 +20,7 @@ def load_CIFAR10(ROOT):
     """ load all of cifar """
     xs = []
     ys = []
-    for i in range(1,5):
+    for i in range(1,2):
         f = os.path.join(ROOT, 'data_batch_%d' % (i, ))
         X, Y = load_CIFAR_batch(f)
         xs.append(X)
@@ -74,7 +74,7 @@ def run_knn():
     for k in [10]:
         nn = NearestNeighbour() # create a Nearest Neighbor classifier class
         nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
-        Yte_predict = nn.predict(Xte_rows, k) # predict labels on the test images
+        Yte_predict = nn.predict(Xte_rows, k,Yte) # predict labels on the test images
         # and now print the classification accuracy, which is the average number
         # of examples that are correctly predicted (i.e label matches)
         acc = np.mean(Yte_predict == Yte)
