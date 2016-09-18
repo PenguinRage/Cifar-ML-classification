@@ -60,7 +60,7 @@ def results(Y_pred, Yte):
     for i in range(len(correct)):
         wrong = (incorrect[i] / 1000) * 100
         right = (correct[i] / 1000) * 100
-        print (labels[i] + '\t correct: ' + right + '% \t incorrect: ' + wrong +'%')
+        print (labels[i] + " correct: " + str(right) + " incorrect: " + str(wrong))
 
 
 def run_knn():
