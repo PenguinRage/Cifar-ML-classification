@@ -37,7 +37,7 @@ def load_CIFAR10(ROOT):
 
 
 def results(Y_pred, Yte):
-    # labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+    labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
     # in testing each class has 1000
 
@@ -53,20 +53,14 @@ def results(Y_pred, Yte):
             correct[Yte[i]] = correct[Yte[i]] + 1
         else:
             incorrect[Yte[i]] = incorrect[Yte[i]] + 1
-
-
-
-    print("correct :")
-
+    
+    print("Each class has a total of 1000")
+    print("Percentage of Correct and Incorrect Classifications by class")
     # print out the percentage of correct predictions
     for i in range(len(correct)):
-        print((correct[i] / 1000) * 100)
-
-    print("incorrect :")
-
-    # print out the percentage of incorrect predictions
-    for i in range(len(incorrect)):
-        print((incorrect[i] / 1000) * 100)
+        wrong = (incorrect[i] / 1000) * 100
+        right = (correct[i] / 1000) * 100
+        print (labels[i] + '\t correct: ' + right + '% \t incorrect: ' + wrong +'%')
 
 
 def run_knn():
