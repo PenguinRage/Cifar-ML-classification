@@ -2,7 +2,7 @@ import numpy as np
 import _pickle as pickle
 import os
 import scipy
-from knn import NearestNeighbour
+from cifar100_knn import NearestNeighbour
 num_of_train = 50000
 num_of_test = 10000
 
@@ -61,7 +61,18 @@ def run_knn():
 
     # flattens out all images to be one dimensional
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000x 3072
-    Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000x 3072 
+    Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000x 3072
+
+    validation_accuracies = []
+    for k in [1]:
+        nn = NearestNeighbour()
+        nn.train(Xtr_rows, Ytr, Ztr)
+        Yte_predict, Zte_predict = nn.predict(Xte_rows, k, Yte, Zte)
+        fine_acc = np.mean(Yte_predict == Yte)
+        coarse_acc = np.mean(Zte_predict == Yte)
+        print('K-NN %d' % (k))
+        print('fine label accuracy: %f' % (acc))
+        print('coarse label accuracy: %f' % (acc))
 
 if __name__ == '__main__':
     run_knn()
