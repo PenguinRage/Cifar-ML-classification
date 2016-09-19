@@ -47,8 +47,8 @@ def results(Y_pred, Yte):
     # in testing each class has 1000
 
     #Yte needs to be set to the test size
-    # k = len(Yte)
-    k = 10
+    k = len(Yte)
+    # k = 10
 
     correct = np.zeros(10)
     incorrect = np.zeros(10)
