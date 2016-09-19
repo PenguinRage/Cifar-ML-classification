@@ -42,6 +42,9 @@ def results(Y_pred, Yte):
     for i in range(10):
         inPred[i, 0] = i
 
+    coPred = np.zeros(10)
+
+
     labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
     # in testing each class has 1000
@@ -57,6 +60,7 @@ def results(Y_pred, Yte):
     for i in range(k):
         if Y_pred[i] == Yte[i]:
             correct[Yte[i]] = correct[Yte[i]] + 1
+            coPred[Yte[i]] += 1
         else:
             incorrect[Yte[i]] = incorrect[Yte[i]] + 1
             inPred[Yte[i], Y_pred[i] + 1] += 1
@@ -74,7 +78,8 @@ def results(Y_pred, Yte):
 
     for i in range (10):
         print(labels[i].upper() +":")
-        print(labels[0] +"  "+ labels[1] +"  "+ labels[2] +"  "+ labels[3] +"  "+ labels[4] +"  "+ labels[5] +"  "+ labels[6] +"  "+ labels[7] +"  "+ labels[8] +"  "+ labels[8] )
+        print("Correct Pred count :" + str(coPred[i]))
+        print(labels[0] +"  "+ labels[1] +"  "+ labels[2] +"  "+ labels[3] +"  "+ labels[4] +"  "+ labels[5] +"  "+ labels[6] +"  "+ labels[7] +"  "+ labels[8] +"  "+ labels[9] )
         print(str(inPred[i,1]) +"    "+ str(inPred[i,2]) +"  "+ str(inPred[i,3]) +"   "+
               str(inPred[i,4]) +"   "+ str(inPred[i,5]) +"   "+ str(inPred[i,6]) +"   "+
               str(inPred[i,7]) +"   "+ str(inPred[i,8]) +"   "+ str(inPred[i,9]) +"   "+ str(inPred[i,10]))
