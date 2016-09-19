@@ -75,7 +75,9 @@ def results(Y_pred, Yte):
     for i in range (10):
         print(labels[i].upper() +":")
         print(labels[0] +"  "+ labels[1] +"  "+ labels[2] +"  "+ labels[3] +"  "+ labels[4] +"  "+ labels[5] +"  "+ labels[6] +"  "+ labels[7] +"  "+ labels[8] +"  "+ labels[8] )
-        print(str(inPred[i,1]) +"    "+ str(inPred[i,2]) +"  "+ str(inPred[i,3]) +"   "+ str(inPred[i,4]) +"   "+ str(inPred[i,5]) +"   "+ str(inPred[i,6]) +"   "+ str(inPred[i,7]) +"   "+ str(inPred[i,8]) +"   "+ str(inPred[i,9]) +"   "+ str(inPred[i,10]))
+        print(str(inPred[i,1]) +"    "+ str(inPred[i,2]) +"  "+ str(inPred[i,3]) +"   "+
+              str(inPred[i,4]) +"   "+ str(inPred[i,5]) +"   "+ str(inPred[i,6]) +"   "+
+              str(inPred[i,7]) +"   "+ str(inPred[i,8]) +"   "+ str(inPred[i,9]) +"   "+ str(inPred[i,10]))
         print()
 
 
