@@ -37,6 +37,13 @@ def load_CIFAR10(ROOT):
 
 
 def results(Y_pred, Yte):
+
+    inPred =np.zeros((10, 11))
+    # set 1 to 10 values(0 to 9)
+    for i in range(10):
+        inPred[i,0] = i
+
+
     labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
     # in testing each class has 1000
@@ -53,6 +60,11 @@ def results(Y_pred, Yte):
             correct[Yte[i]] = correct[Yte[i]] + 1
         else:
             incorrect[Yte[i]] = incorrect[Yte[i]] + 1
+            #Yte was incorrectly predicted
+            for j in range(1):
+                if Yte[i]==inPred[j,0]:
+                    inPred[j, Y_pred[i]+1] += 1
+
     
     print("Each class has a total of 1000")
     print("Percentage of Correct and Incorrect Classifications by class")
@@ -63,16 +75,8 @@ def results(Y_pred, Yte):
         print (labels[i] + " correct: " + str(right) + " incorrect: " + str(wrong))
 
 
-    # need to add to results to show more details about predictions
-
-    # what predictions occur for inaccurate classifiers
-    # what % is being predicted as what percentage
-
-    #find number of incorrect predictions of each class -done before
-    # for each classes incorrectly predicted what where they predicted as? and in what percentage
-    # so for each class i will need another 10 variables or 10*10 array
-
-
+    print(incorrect[0])
+    print (inPred)
 
 
 def run_knn():
