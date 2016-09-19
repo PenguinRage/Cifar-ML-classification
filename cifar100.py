@@ -71,8 +71,8 @@ def run_knn():
         fine_acc = np.mean(Yte_predict == Yte)
         coarse_acc = np.mean(Zte_predict == Yte)
         print('K-NN %d' % (k))
-        print('fine label accuracy: %f' % (acc))
-        print('coarse label accuracy: %f' % (acc))
+        print('fine label accuracy: %f' % (fine_acc))
+        print('coarse label accuracy: %f' % (coarse_acc))
 
 if __name__ == '__main__':
     run_knn()
