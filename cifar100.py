@@ -60,8 +60,14 @@ def load_CIFAR10(ROOT):
 def results(Y_pred,Z_pred, Yte ,Zte):
     """ seperate and print out class results """
 
+    #correct and incorrect counts
+    correct = 0
+    incorrect = 0
+
+
     # there are 20 super classes
     super = np.zeros(20)
+    inSuper = np.zeros(20)
     superLabels = ['aquatic mammals', 'fish', 'flowers', 'food containers', 'fruit and vegetables', 'household electrical devices'
         , 'household furniture', 'insects', 'large carnivores','large man - made outdoor things', 'large natural outdoor scenes'
         , 'large omnivores and herbivores', 'medium-sized mammals', 'non-insect invertabrates', 'people', 'reptiles', 'small mammals'
@@ -69,6 +75,7 @@ def results(Y_pred,Z_pred, Yte ,Zte):
 
     # and 100 sub (or normal) classes
     sub = np.zeroes(100)
+    inSub = np.zeroes(100)
     subLabels = ['beaver', 'dolphin', 'otter', 'seal', 'whale'
         ,'aquarium fish', 'flatfish', 'ray', 'shark, trout'
         ,'orchids', 'poppies', 'roses', 'sunflowers',' tulips'
@@ -97,11 +104,34 @@ def results(Y_pred,Z_pred, Yte ,Zte):
 
     for i in range (testSize):
         #correct prediction
-        if Y_pred[i]==Yte[i] and Z_pre[i]==Zte[i]:
+        if Y_pred[i]==Yte[i]:
             super[Yte[i]] += 1
-            sub[Zte[i]] += 1
-        elif Y_pred[i]!=Yte[i] or Z_pred[i]!=Zte[i]:
-            # incorrect prediction if either lable is not correct
+            if Z_pred[i]==Zte[i]:
+                sub[Zte[i]] += 1
+                correct +=1
+            else:
+                #incorrect 2nd lable
+                inSub[Zte[i]] +=1
+                incorrect +=1
+
+        elif Y_pred[i]!=Yte[i]:
+            # incorrect prediction
+            inSuper[Y_pred[i]]
+            incorrect+=1
+            if Z_pred[i]==Zte[i]:
+                sub[Zte[i]] += 1
+            else:
+                # incorrect 2nd lable
+                inSub[Zte[i]] += 1
+
+    #after for loop
+
+    # super : contains counts of all correct super class predictions
+    # sub : contains counts of all correct sub class predictions
+
+    # inSuper : contains counts of all incorrect super class predictions
+    # inSub : contains counts of all incorrect sub class predictions
+
 
 
 
