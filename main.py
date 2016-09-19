@@ -47,8 +47,8 @@ def results(Y_pred, Yte):
     # in testing each class has 1000
 
     #Yte needs to be set to the test size
-    k = len(Yte)
-    #k = 100
+    # k = len(Yte)
+    k = 10
 
     correct = np.zeros(10)
     incorrect = np.zeros(10)
@@ -69,11 +69,16 @@ def results(Y_pred, Yte):
         right = (correct[i] / 1000) * 100
         print(labels[i] + " correct: " + str(right) + " incorrect: " + str(wrong))
 
-    print(incorrect[0])
+    print("Number of times each class was predicted wrongfully per class:")
+    print ()
 
     for i in range (10):
-        print(labels[i])
-        print(inPred[i])
+        print(labels[i].upper() +":")
+        print(labels[0] +"  "+ labels[1] +"  "+ labels[2] +"  "+ labels[3] +"  "+ labels[4] +"  "+ labels[5] +"  "+ labels[6] +"  "+ labels[7] +"  "+ labels[8] +"  "+ labels[8] )
+        print(str(inPred[i,1]) +"    "+ str(inPred[i,2]) +"  "+ str(inPred[i,3]) +"   "+ str(inPred[i,4]) +"   "+ str(inPred[i,5]) +"   "+ str(inPred[i,6]) +"   "+ str(inPred[i,7]) +"   "+ str(inPred[i,8]) +"   "+ str(inPred[i,9]) +"   "+ str(inPred[i,10]))
+        print()
+
+
 
 def run_knn():
     Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
