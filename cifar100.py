@@ -56,6 +56,56 @@ def load_CIFAR10(ROOT):
     Xte, Yte, Zte = load_CIFAR_test(os.path.join(ROOT, 'test'))
     return Xtr, Ytr, Ztr, Xte, Yte, Zte
 
+
+def results(Y_pred,Z_pred, Yte ,Zte):
+    """ seperate and print out class results """
+
+    # there are 20 super classes
+    super = np.zeros(20)
+    superLabels = ['aquatic mammals', 'fish', 'flowers', 'food containers', 'fruit and vegetables', 'household electrical devices'
+        , 'household furniture', 'insects', 'large carnivores','large man - made outdoor things', 'large natural outdoor scenes'
+        , 'large omnivores and herbivores', 'medium-sized mammals', 'non-insect invertabrates', 'people', 'reptiles', 'small mammals'
+        , 'trees', 'vehicles 1', 'vehicles 2']
+
+    # and 100 sub (or normal) classes
+    sub = np.zeroes(100)
+    subLabels = ['beaver', 'dolphin', 'otter', 'seal', 'whale'
+        ,'aquarium fish', 'flatfish', 'ray', 'shark, trout'
+        ,'orchids', 'poppies', 'roses', 'sunflowers',' tulips'
+        ,'bottles', 'bowls', 'cans', 'cups', 'plates'
+        ,'apples', 'mushrooms', 'oranges', 'pears', 'sweet peppers'
+        ,'clock', 'computer keyboard', 'lamp', 'telephone', 'television'
+        ,'bed', 'chair', 'couch', 'table', 'wardrobe'
+        ,'bee', 'beetle', 'butterfly', 'caterpillar', 'cockroach'
+        ,'bear', 'leopard', 'lion', 'tiger', 'wolf'
+        ,'bridge', 'castle', 'house', 'road', 'skyscraper'
+        ,'cloud', 'forest', 'mountain', 'plain', 'sea'
+        ,'camel', 'cattle', 'chimpanzee', 'elephant', 'kangaroo'
+        ,'fox', 'porcupine', 'possum', 'raccoon', 'skunk'
+        ,'crab', 'lobster', 'snail', 'spider', 'worm'
+        ,'baby', 'boy', 'girl', 'man', 'woman'
+        ,'crocodile', 'dinosaur', 'lizard', 'snake', 'turtle'
+        ,'hamster', 'mouse', 'rabbit', 'shrew', 'squirrel'
+        ,'maple', 'oak', 'palm', 'pine', 'willow'
+        ,'bicycle', 'bus', 'motorcycle', 'pickup truck', 'train'
+        ,'lawn-mower', 'rocket', 'streetcar', 'tank', 'tractor']
+
+
+
+    # a correct prediction is only when Yte and Zte are predicted correctly
+    testSize = 10000
+
+    for i in range (testSize):
+        #correct prediction
+        if Y_pred[i]==Yte[i] and Z_pre[i]==Zte[i]:
+            super[Yte[i]] += 1
+            sub[Zte[i]] += 1
+        elif Y_pred[i]!=Yte[i] or Z_pred[i]!=Zte[i]:
+            # incorrect prediction if either lable is not correct
+
+
+
+
 def run_knn():
     Xtr, Ytr, Ztr, Xte, Yte, Zte = load_CIFAR10('cifar-100-python')
 
