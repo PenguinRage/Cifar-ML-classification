@@ -63,6 +63,18 @@ def results(Y_pred, Yte):
         print (labels[i] + " correct: " + str(right) + " incorrect: " + str(wrong))
 
 
+    # need to add to results to show more details about predictions
+
+    # what predictions occur for inaccurate classifiers
+    # what % is being predicted as what percentage
+
+    #find number of incorrect predictions of each class -done before
+    # for each classes incorrectly predicted what where they predicted as? and in what percentage
+    # so for each class i will need another 10 variables or 10*10 array
+
+
+
+
 def run_knn():
     Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
     
