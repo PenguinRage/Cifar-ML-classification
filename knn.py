@@ -13,7 +13,7 @@ class NearestNeighbour(object):
         self.Xtr = X
         self.ytr = y
 
-    def predict(self, X, K, Yte):
+    def predict(self, X, K):
         labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
@@ -64,7 +64,7 @@ class NearestNeighbour(object):
             
             # predict the label of the nearest example
             Ypred[i] = np.argmax(classes)
-            print("Test case " + str(i) + ": \t Predicted label is:" + labels[Ypred[i]] + " \t Expected label: " + labels[Yte[i]])
+            print("Test case " + str(i) + ": \t Predicted label is:" + labels[Ypred[i]])
 
             # print(Ypred[i])
         return Ypred

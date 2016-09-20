@@ -23,7 +23,7 @@ def load_CIFAR10(ROOT):
     """ load all of cifar """
     xs = []
     ys = []
-    for i in range(1,6):
+    for i in range(1,2):
         f = os.path.join(ROOT, 'data_batch_%d' % (i,))
         X, Y = load_CIFAR_batch(f)
         xs.append(X)
@@ -114,15 +114,14 @@ def run_knn():
         Yte_predict = nn.predict(Xte_rows, k)  # predict labels on the test images
         # and now print the classification accuracy, which is the average number
         # of examples that are correctly predicted (i.e label matches)
-        acc = np.mean(Yte_predict == Yte)
-        print('K-NN %d' % (k))
-        print('accuracy: %f' % (acc))
+        if (new != 'y'):
+            acc = np.mean(Yte_predict == Yte)
+            print('K-NN %d' % (k))
+            print('accuracy: %f' % (acc))
+            results(Yte_predict,Yte)
         
         # Print predictions to csv
     np.savetxt("cifar10_predictions.csv", Yte_predict, delimiter=",")
-
-    if (new == n):
-        results(Yte_predict, Yte)
 
     # return the predictions and the actual values
     return
