@@ -57,29 +57,32 @@ def results(Y_pred, Yte):
 
 
 def run_knn():
-    Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
+    new = input('Testing with a new batch? y or n')
+    if (new == y):
+        print("Hello")
 
-    # flattens out all images to be one dimensional
-    Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000x 3072
-    Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000x 3072
+    else:
+        Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
+        # flattens out all images to be one dimensional
+        Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000x 3072
+        Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000x 3072
+        validation_accuracies = []
+        for k in [10]:
+            nn = NearestNeighbour()  # create a Nearest Neighbor classifier class
+            nn.train(Xtr_rows, Ytr)  # train the classifier on the training images and labels
+            Yte_predict = nn.predict(Xte_rows, k)  # predict labels on the test images
+            # and now print the classification accuracy, which is the average number
+            # of examples that are correctly predicted (i.e label matches)
+            acc = np.mean(Yte_predict == Yte)
+            print('K-NN %d' % (k))
+            print('accuracy: %f' % (acc))
+        results(Yte_predict,Yte)
 
-    validation_accuracies = []
-    for k in [10]:
-        nn = NearestNeighbour()  # create a Nearest Neighbor classifier class
-        nn.train(Xtr_rows, Ytr)  # train the classifier on the training images and labels
-        Yte_predict = nn.predict(Xte_rows, k, Yte)  # predict labels on the test images
-        # and now print the classification accuracy, which is the average number
-        # of examples that are correctly predicted (i.e label matches)
-        acc = np.mean(Yte_predict == Yte)
-        print('K-NN %d' % (k))
-        print('accuracy: %f' % (acc))
-
-        validation_accuracies.append((k, acc))
-
+    # Print predictions to csv
+    np.savetxt("cifar10_predictions.csv", Yte_predict, delimiter=",")
     # return the predictions and the actual values
     return Yte_predict, Yte
 
 
-if __name__ == '__main__':
-    Y_pred, Yte = run_knn()
-    results(Y_pred, Yte)
+if __name__ == '__main__': 
+    run_knn()

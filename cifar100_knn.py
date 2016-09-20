@@ -1,4 +1,5 @@
 import numpy as np
+import operator
 
 class NearestNeighbour(object):
     def __init__(self):
@@ -15,8 +16,6 @@ class NearestNeighbour(object):
         self.ztr = z
 
     def predict(self, X, K, Yte, Zte):
-        """TODO"""
-        super_labels = []
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
         
@@ -36,40 +35,21 @@ class NearestNeighbour(object):
                 print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
                 continue
 
-            # TODO
             # sort the distance
             min_index = np.argsort(distances, -1,'mergesort')
 
             # K-Nearest component
-            classes = np.zeros(20)
+            classes = {}
 
             for j in range(K):
-                if self.ytr[min_index[j]] == 0:
-                    classes[0] += 1
-                elif self.ytr[min_index[j]]==1:
-                    classes[1] += 1
-                elif self.ytr[min_index[j]]==2:
-                    classes[2] += 1
-                elif self.ytr[min_index[j]]==3:
-                    classes[3] += 1
-                elif self.ytr[min_index[j]]==4:
-                    classes[4] += 1
-                elif self.ytr[min_index[j]]==5:
-                    classes[5] += 1
-                elif self.ytr[min_index[j]]==6:
-                    classes[6] += 1
-                elif self.ytr[min_index[j]]==7:
-                    classes[7] += 1
-                elif self.ytr[min_index[j]]==8:
-                    classes[8] += 1
-                elif self.ytr[min_index[j]]==9:
-                    classes[9] += 1
+                if self.ytr[min_index[j]] in classes.keys():
+                    classes[self.ztr[min_index[j]]] += 1
                 else:
-                    print('Error - Invalid class')
+                    classes[self.ztr[min_index[j]]] = 1
             
             # predict the label of the nearest example
-            Ypred[i] = np.argmax(classes)
-            print("Test case " + str(i) + ": \t Predicted label is:" + labels[Ypred[i]] + " \t Expected label: " + labels[Yte[i]])
+            Zpred[i] = max(classes.items(), key = operator.itemgetter(1))[0]
+
 
             # print(Ypred[i])
-        return Ypred, Zpred
+        return Zpred

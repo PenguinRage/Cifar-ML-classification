@@ -56,9 +56,9 @@ def load_CIFAR10(ROOT):
     Xte, Yte, Zte = load_CIFAR_test(os.path.join(ROOT, 'test'))
     return Xtr, Ytr, Ztr, Xte, Yte, Zte
 
-
+"""
 def results(Y_pred,Z_pred, Yte ,Zte):
-    """ seperate and print out class results """
+    # seperate and print out class results
 
     #correct and incorrect counts
     correct = 0
@@ -131,7 +131,7 @@ def results(Y_pred,Z_pred, Yte ,Zte):
 
     # inSuper : contains counts of all incorrect super class predictions
     # inSub : contains counts of all incorrect sub class predictions
-
+"""
 
 
 
@@ -140,8 +140,8 @@ def run_knn():
     Xtr, Ytr, Ztr, Xte, Yte, Zte = load_CIFAR10('cifar-100-python')
 
     # flattens out all images to be one dimensional
-    Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000x 3072
-    Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000x 3072
+    Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
+    Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
     validation_accuracies = []
     for k in [1]:
