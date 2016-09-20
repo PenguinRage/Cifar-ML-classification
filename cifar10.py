@@ -1,7 +1,7 @@
 import numpy as np
 import _pickle as pickle
 import os
-import scipy
+from sklearn.metric import confusion_matrix
 from knn import NearestNeighbour
 
 
@@ -35,56 +35,25 @@ def load_CIFAR10(ROOT):
     Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
     return Xtr, Ytr, Xte, Yte
 
+def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(iris.target_names))
+    plt.xticks(tick_marks, labels, rotation=45)
+    plt.yticks(tick_marks, labels)
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.savefig('CIFAR_10_confusion_matrix')+'.jpg')
+
 
 def results(Y_pred, Yte):
-    inPred = np.zeros((10, 11))
-    # set 1 to 10 values(0 to 9)
-    for i in range(10):
-        inPred[i, 0] = i
-
-    coPred = np.zeros(10)
-
-
     labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-
-    # in testing each class has 1000
-
-    #Yte needs to be set to the test size
-    k = len(Yte)
-    # k = 10
-
-    correct = np.zeros(10)
-    incorrect = np.zeros(10)
-
-    # count correct and incorrect predictions
-    for i in range(k):
-        if Y_pred[i] == Yte[i]:
-            correct[Yte[i]] = correct[Yte[i]] + 1
-            coPred[Yte[i]] += 1
-        else:
-            incorrect[Yte[i]] = incorrect[Yte[i]] + 1
-            inPred[Yte[i], Y_pred[i] + 1] += 1
-
-    print("Each class has a total of 1000")
-    print("Percentage of Correct and Incorrect Classifications by class")
-    # print out the percentage of correct predictions
-    for i in range(len(correct)):
-        wrong = (incorrect[i] / 1000) * 100
-        right = (correct[i] / 1000) * 100
-        print(labels[i] + " correct: " + str(right) + " incorrect: " + str(wrong))
-
-    print("Number of times each class was predicted wrongfully per class:")
-    print ()
-
-    for i in range (10):
-        print(labels[i].upper() +":")
-        print("Correct Pred count :" + str(coPred[i]))
-        print(labels[0] +"  "+ labels[1] +"  "+ labels[2] +"  "+ labels[3] +"  "+ labels[4] +"  "+ labels[5] +"  "+ labels[6] +"  "+ labels[7] +"  "+ labels[8] +"  "+ labels[9] )
-        print(str(inPred[i,1]) +"    "+ str(inPred[i,2]) +"  "+ str(inPred[i,3]) +"   "+
-              str(inPred[i,4]) +"   "+ str(inPred[i,5]) +"   "+ str(inPred[i,6]) +"   "+
-              str(inPred[i,7]) +"   "+ str(inPred[i,8]) +"   "+ str(inPred[i,9]) +"   "+ str(inPred[i,10]))
-        print()
-
+    cm = confusion_matrix(Yte, Y_pred,labels)
+    print(cm)
+    plt.figure()
+    plot_confusion_matrix(cm)
 
 
 def run_knn():

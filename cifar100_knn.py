@@ -36,6 +36,7 @@ class NearestNeighbour(object):
                 print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
                 continue
 
+            # TODO
             # sort the distance
             min_index = np.argsort(distances, -1,'mergesort')
 

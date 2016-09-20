@@ -2,9 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
+# C extensions
+*.swo
 .idea/
 *.swp
 # tar extensions - Stops us from adding the batch files.
