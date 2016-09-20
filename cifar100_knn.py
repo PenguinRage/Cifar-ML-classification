@@ -16,6 +16,7 @@ class NearestNeighbour(object):
         self.ztr = z
 
     def predict(self, X, K, Yte, Zte):
+
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
         
@@ -39,17 +40,24 @@ class NearestNeighbour(object):
             min_index = np.argsort(distances, -1,'mergesort')
 
             # K-Nearest component
-            classes = {}
+            coarse_classes = {}
+            fine_classes = {}
 
             for j in range(K):
-                if self.ytr[min_index[j]] in classes.keys():
-                    classes[self.ztr[min_index[j]]] += 1
+                if self.ztr[min_index[j]] in coarse_classes.keys():
+                    coarse_classes[self.ztr[min_index[j]]] += 1
                 else:
-                    classes[self.ztr[min_index[j]]] = 1
-            
-            # predict the label of the nearest example
-            Zpred[i] = max(classes.items(), key = operator.itemgetter(1))[0]
+                    coarse_classes[self.ztr[min_index[j]]] = 1
+                
+                if self.ytr[min_index[j]] in classes.keys():
+                    fine_classes[self.ytr[min_index[j]]] += 1
+                else:
+                    fine_classes[self.ytr[min_index[j]]] = 1
 
+            # predict the label of the nearest example
+            Zpred[i] = max(coarse_classes.items(), key = operator.itemgetter(1))[0]
+            Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
+            print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
 
             # print(Ypred[i])
-        return Zpred
+        return Zpred, Ypred

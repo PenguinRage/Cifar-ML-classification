@@ -3,6 +3,7 @@ import numpy as np
 import _pickle as pickle
 import os
 import glob
+# only using the library for confusion_matrix
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 from knn import NearestNeighbour
@@ -77,23 +78,22 @@ def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
 
 
 def results(Y_pred, Yte):
-    labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
     cm = confusion_matrix(Yte, Y_pred)
     title = "10NN Confusion Matrix"
     i= "normal"
     print(cm)
     plt.figure()
     plot_confusion_matrix(cm,title, i)
-    title = "10NN Normalised Confusion Matrix"
-    i = "normalised"
-    cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-    plt.figure()
-    plot_confusion_matrix(cm_norm, title, i)
+    # title = "10NN Normalised Confusion Matrix"
+    # i = "normalised"
+    # cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    # plt.figure()
+    # plot_confusion_matrix(cm_norm, title, i)
 
 
 
 def run_knn():
-    new = input('Testing with a new batch? (y or n): ')
+    new = input('Testing with new undefined images? (y or n): ')
     if (new == 'y'):
         Xtr, Ytr, Xte = load_CIFAR10_images('cifar-10-batches-py','INFO3406_assignment1_query')
         Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
