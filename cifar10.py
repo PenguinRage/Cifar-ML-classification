@@ -1,7 +1,8 @@
 import numpy as np
 import _pickle as pickle
 import os
-from sklearn.metric import confusion_matrix
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 from knn import NearestNeighbour
 
 
@@ -20,7 +21,7 @@ def load_CIFAR10(ROOT):
     """ load all of cifar """
     xs = []
     ys = []
-    for i in range(1, 6):
+    for i in range(1,6):
         f = os.path.join(ROOT, 'data_batch_%d' % (i,))
         X, Y = load_CIFAR_batch(f)
         xs.append(X)
@@ -35,25 +36,33 @@ def load_CIFAR10(ROOT):
     Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
     return Xtr, Ytr, Xte, Yte
 
-def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
+def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
+    labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar()
-    tick_marks = np.arange(len(iris.target_names))
+    tick_marks = np.arange(len(labels))
     plt.xticks(tick_marks, labels, rotation=45)
     plt.yticks(tick_marks, labels)
-    plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.savefig('CIFAR_10_confusion_matrix')+'.jpg')
+    plt.savefig('CIFAR_10_confusion_matrix_'+ i + '.png')
 
 
 def results(Y_pred, Yte):
     labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-    cm = confusion_matrix(Yte, Y_pred,labels)
+    cm = confusion_matrix(Yte, Y_pred)
+    title = "10NN Confusion Matrix"
+    i= "normal"
     print(cm)
     plt.figure()
-    plot_confusion_matrix(cm)
+    plot_confusion_matrix(cm,title, i)
+    title = "10NN Normalised Confusion Matrix"
+    i = "normalised"
+    cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    plt.figure()
+    plot_confusion_matrix(cm_norm, title, i)
+
 
 
 def run_knn():
