@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import operator
 
 class NearestNeighbour(object):
@@ -15,7 +16,7 @@ class NearestNeighbour(object):
         self.ytr = y
         self.ztr = z
 
-    def predict(self, X, K, Yte, Zte):
+    def predict(self, X, K):
 
         # X is N * D where each row is an example we wish to predict label for
         num_test = X.shape[0]
@@ -33,7 +34,7 @@ class NearestNeighbour(object):
                 min_index = np.argmin(distances)
                 Ypred[i] = self.ytr[min_index]
                 Zpred[i] = self.ztr[min_index]
-                print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
+                print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + "\t Predicted: " + str(Zpred[i]))
                 continue
 
             # sort the distance
@@ -44,20 +45,21 @@ class NearestNeighbour(object):
             fine_classes = {}
 
             for j in range(K):
-                if self.ztr[min_index[j]] in coarse_classes.keys():
-                    coarse_classes[self.ztr[min_index[j]]] += 1
-                else:
-                    coarse_classes[self.ztr[min_index[j]]] = 1
-                
                 if self.ytr[min_index[j]] in fine_classes.keys():
                     fine_classes[self.ytr[min_index[j]]] += 1
                 else:
                     fine_classes[self.ytr[min_index[j]]] = 1
-
-            # predict the label of the nearest example
-            Zpred[i] = max(coarse_classes.items(), key = operator.itemgetter(1))[0]
+            
             Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
-            print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
+            """if self.ztr[min_index[j]] in coarse_classes.keys():
+                    coarse_classes[self.ztr[min_index[j]]] += 1
+                else:
+                    coarse_classes[self.ztr[min_index[j]]] = 1"""
+            Zpred[i] = math.floor(Ypred[i]/5)
+            # predict the label of the nearest example
+            #Zpred[i] = max(coarse_classes.items(), key = operator.itemgetter(1))[0]
+            #Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
+            print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + "\t Predicted: " + str(Zpred[i]))
 
             # print(Ypred[i])
         return Ypred, Zpred

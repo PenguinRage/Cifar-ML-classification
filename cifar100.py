@@ -1,6 +1,10 @@
+from PIL import Image
 import numpy as np
 import _pickle as pickle
 import os
+import glob
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 import scipy
 from cifar100_knn import NearestNeighbour
 num_of_train = 50000
@@ -97,12 +101,12 @@ def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
     plt.yticks(tick_marks, labels)
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.savefig('CIFAR_10_confusion_matrix_'+ i + '.png')
+    plt.savefig('CIFAR_1_confusion_matrix_'+ i + '.png')
 
 
 def results(Y_pred, Yte):
     cm = confusion_matrix(Yte, Y_pred)
-    title = "10NN Confusion Matrix"
+    title = "1NN Confusion Matrix"
     i= "normal"
     print(cm)
     plt.figure()
@@ -110,9 +114,9 @@ def results(Y_pred, Yte):
 
 
 def run_knn():
-        new = input('Testing with new undefined images? (y or n): ')
+    new = input('Testing with new undefined images? (y or n): ')
     if (new == 'y'):
-        Xtr, Ytr, Xte = load_CIFAR10_images('cifar-100-python','INFO3406_assignment1_query')
+        Xtr, Ytr, Ztr, Xte = load_CIFAR10_images('cifar-100-python','INFO3406_assignment1_query')
 
     else:
         Xtr, Ytr, Ztr, Xte, Yte, Zte = load_CIFAR10('cifar-100-python')
@@ -121,11 +125,11 @@ def run_knn():
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
-    for k in [10]:
+    for k in [1]:
         # create NearestNeighbour 
         nn = NearestNeighbour()
         # Train data
-        nn.train(Xtr_rows)
+        nn.train(Xtr_rows,Ytr,Ztr)
         # Predict the values of fine and coarse labels
         Yte_predict, Zte_predict = nn.predict(Xte_rows, k)
         
@@ -135,6 +139,7 @@ def run_knn():
             print('K-NN %d' % (k))
             print('fine label accuracy: %f' % (fine_acc))
             print('coarse label accuracy: %f' % (coarse_acc))
+            results(Zte_predict, Zte)
     
     # Save output to csv
     np.savetxt("cifar100_predictions.csv",(Zte_predict, Yte_predict), delimiter=",")
