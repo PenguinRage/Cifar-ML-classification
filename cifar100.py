@@ -144,7 +144,7 @@ def run_knn():
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
     validation_accuracies = []
-    for k in [1]:
+    for k in [10]:
         nn = NearestNeighbour()
         nn.train(Xtr_rows, Ytr, Ztr)
         Yte_predict, Zte_predict = nn.predict(Xte_rows, k, Yte, Zte)

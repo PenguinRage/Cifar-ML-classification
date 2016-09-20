@@ -49,7 +49,7 @@ class NearestNeighbour(object):
                 else:
                     coarse_classes[self.ztr[min_index[j]]] = 1
                 
-                if self.ytr[min_index[j]] in classes.keys():
+                if self.ytr[min_index[j]] in fine_classes.keys():
                     fine_classes[self.ytr[min_index[j]]] += 1
                 else:
                     fine_classes[self.ytr[min_index[j]]] = 1
@@ -60,4 +60,4 @@ class NearestNeighbour(object):
             print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + " Expected: " + str(Yte[i]) + "\t Predicted: " + str(Zpred[i]) + " Expected: " + str(Zte[i]))
 
             # print(Ypred[i])
-        return Zpred, Ypred
+        return Ypred, Zpred
