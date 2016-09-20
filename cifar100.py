@@ -56,103 +56,88 @@ def load_CIFAR10(ROOT):
     Xte, Yte, Zte = load_CIFAR_test(os.path.join(ROOT, 'test'))
     return Xtr, Ytr, Ztr, Xte, Yte, Zte
 
-"""
-def results(Y_pred,Z_pred, Yte ,Zte):
-    # seperate and print out class results
+def load_CIFAR10_image(image):
+    X = np.array(image)
+    X = X.reshape(1, 3, 32, 32).transpose(0, 2, 3, 1).astype("float")
+    return X
 
-    #correct and incorrect counts
-    correct = 0
-    incorrect = 0
+def load_CIFAR10_images(TROOT,ROOT):
+    """ load all of cifar """
+    xs = []
+    ys = []
+    zs = []
+    f = os.path.join(TROOT, 'train')
+    X, Y, Z = load_CIFAR_train(f)
+    xs.append(X)
+    ys.append(Y)
+    zs.append(Z)
+    Xtr = np.concatenate(xs)
+    Ytr = np.concatenate(ys)
+    Ztr = np.concatenate(zs)
+    del X, Y, Z
+    """
+    Xtr, Ytr, Ztr = training data
+    Xte = testing data
+    """
+    xs = []
+    for filename in glob.glob(ROOT + '/*.png'):
+        image = Image.open(filename)
+        X = load_CIFAR10_image(image)
+        xs.append(X)
+    Xte = np.concatenate(xs)
+    return Xtr, Ytr, Ztr, Xte
 
-
-    # there are 20 super classes
-    super = np.zeros(20)
-    inSuper = np.zeros(20)
-    superLabels = ['aquatic mammals', 'fish', 'flowers', 'food containers', 'fruit and vegetables', 'household electrical devices'
-        , 'household furniture', 'insects', 'large carnivores','large man - made outdoor things', 'large natural outdoor scenes'
-        , 'large omnivores and herbivores', 'medium-sized mammals', 'non-insect invertabrates', 'people', 'reptiles', 'small mammals'
-        , 'trees', 'vehicles 1', 'vehicles 2']
-
-    # and 100 sub (or normal) classes
-    sub = np.zeroes(100)
-    inSub = np.zeroes(100)
-    subLabels = ['beaver', 'dolphin', 'otter', 'seal', 'whale'
-        ,'aquarium fish', 'flatfish', 'ray', 'shark, trout'
-        ,'orchids', 'poppies', 'roses', 'sunflowers',' tulips'
-        ,'bottles', 'bowls', 'cans', 'cups', 'plates'
-        ,'apples', 'mushrooms', 'oranges', 'pears', 'sweet peppers'
-        ,'clock', 'computer keyboard', 'lamp', 'telephone', 'television'
-        ,'bed', 'chair', 'couch', 'table', 'wardrobe'
-        ,'bee', 'beetle', 'butterfly', 'caterpillar', 'cockroach'
-        ,'bear', 'leopard', 'lion', 'tiger', 'wolf'
-        ,'bridge', 'castle', 'house', 'road', 'skyscraper'
-        ,'cloud', 'forest', 'mountain', 'plain', 'sea'
-        ,'camel', 'cattle', 'chimpanzee', 'elephant', 'kangaroo'
-        ,'fox', 'porcupine', 'possum', 'raccoon', 'skunk'
-        ,'crab', 'lobster', 'snail', 'spider', 'worm'
-        ,'baby', 'boy', 'girl', 'man', 'woman'
-        ,'crocodile', 'dinosaur', 'lizard', 'snake', 'turtle'
-        ,'hamster', 'mouse', 'rabbit', 'shrew', 'squirrel'
-        ,'maple', 'oak', 'palm', 'pine', 'willow'
-        ,'bicycle', 'bus', 'motorcycle', 'pickup truck', 'train'
-        ,'lawn-mower', 'rocket', 'streetcar', 'tank', 'tractor']
-
-
-
-    # a correct prediction is only when Yte and Zte are predicted correctly
-    testSize = 10000
-
-    for i in range (testSize):
-        #correct prediction
-        if Y_pred[i]==Yte[i]:
-            super[Yte[i]] += 1
-            if Z_pred[i]==Zte[i]:
-                sub[Zte[i]] += 1
-                correct +=1
-            else:
-                #incorrect 2nd lable
-                inSub[Zte[i]] +=1
-                incorrect +=1
-
-        elif Y_pred[i]!=Yte[i]:
-            # incorrect prediction
-            inSuper[Y_pred[i]]
-            incorrect+=1
-            if Z_pred[i]==Zte[i]:
-                sub[Zte[i]] += 1
-            else:
-                # incorrect 2nd lable
-                inSub[Zte[i]] += 1
-
-    #after for loop
-
-    # super : contains counts of all correct super class predictions
-    # sub : contains counts of all correct sub class predictions
-
-    # inSuper : contains counts of all incorrect super class predictions
-    # inSub : contains counts of all incorrect sub class predictions
-"""
+def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
+    labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19]
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(labels))
+    plt.xticks(tick_marks, labels, rotation=45)
+    plt.yticks(tick_marks, labels)
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.savefig('CIFAR_10_confusion_matrix_'+ i + '.png')
 
 
+def results(Y_pred, Yte):
+    cm = confusion_matrix(Yte, Y_pred)
+    title = "10NN Confusion Matrix"
+    i= "normal"
+    print(cm)
+    plt.figure()
+    plot_confusion_matrix(cm,title, i)
 
 
 def run_knn():
-    Xtr, Ytr, Ztr, Xte, Yte, Zte = load_CIFAR10('cifar-100-python')
+        new = input('Testing with new undefined images? (y or n): ')
+    if (new == 'y'):
+        Xtr, Ytr, Xte = load_CIFAR10_images('cifar-100-python','INFO3406_assignment1_query')
+
+    else:
+        Xtr, Ytr, Ztr, Xte, Yte, Zte = load_CIFAR10('cifar-100-python')
 
     # flattens out all images to be one dimensional
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
-    validation_accuracies = []
     for k in [10]:
+        # create NearestNeighbour 
         nn = NearestNeighbour()
-        nn.train(Xtr_rows, Ytr, Ztr)
-        Yte_predict, Zte_predict = nn.predict(Xte_rows, k, Yte, Zte)
-        fine_acc = np.mean(Yte_predict == Yte)
-        coarse_acc = np.mean(Zte_predict == Yte)
-        print('K-NN %d' % (k))
-        print('fine label accuracy: %f' % (fine_acc))
-        print('coarse label accuracy: %f' % (coarse_acc))
+        # Train data
+        nn.train(Xtr_rows)
+        # Predict the values of fine and coarse labels
+        Yte_predict, Zte_predict = nn.predict(Xte_rows, k)
+        
+        if (new != 'y'):
+            fine_acc = np.mean(Yte_predict == Yte)
+            coarse_acc = np.mean(Zte_predict == Yte)
+            print('K-NN %d' % (k))
+            print('fine label accuracy: %f' % (fine_acc))
+            print('coarse label accuracy: %f' % (coarse_acc))
+    
+    # Save output to csv
+    np.savetxt("cifar100_predictions.csv",(Zte_predict, Yte_predict), delimiter=",")
 
 if __name__ == '__main__':
     run_knn()

@@ -55,8 +55,12 @@ def load_CIFAR10_images(TROOT,ROOT):
         ys.append(Y)
     Xtr = np.concatenate(xs)
     Ytr = np.concatenate(ys)
+    del X, Y
+    """
+    Xtr, Ytr = training data
+    Xte = testing data
+    """
     xs = []
-    ys = []
     for filename in glob.glob(ROOT + '/*.png'):
         image = Image.open(filename)
         X = load_CIFAR10_image(image)
@@ -96,8 +100,6 @@ def run_knn():
     new = input('Testing with new undefined images? (y or n): ')
     if (new == 'y'):
         Xtr, Ytr, Xte = load_CIFAR10_images('cifar-10-batches-py','INFO3406_assignment1_query')
-        Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
-        Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become Number of Tests x 3072
 
     else:
         Xtr, Ytr, Xte, Yte = load_CIFAR10('cifar-10-batches-py')
