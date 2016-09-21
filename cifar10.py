@@ -8,23 +8,23 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 from knn import NearestNeighbour
 
-
+# Loads a binary patch file
 def load_CIFAR_batch(file):
     """ load single batch of cifar"""
     with open(file, 'rb') as f:
         datadict = pickle.load(f, encoding='latin1')
         X = datadict['data']
         Y = datadict['labels']
-        X = X.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("float")
+        X = X.reshape(10000, 3, 32, 32).transpose(0,2,3,1).astype("float")
         Y = np.array(Y)
     return X, Y
 
-
+# Loads training and test batch files 
 def load_CIFAR10(ROOT):
     """ load all of cifar """
     xs = []
     ys = []
-    for i in range(1,2):
+    for i in range(1,6):
         f = os.path.join(ROOT, 'data_batch_%d' % (i,))
         X, Y = load_CIFAR_batch(f)
         xs.append(X)
@@ -39,12 +39,14 @@ def load_CIFAR10(ROOT):
     Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
     return Xtr, Ytr, Xte, Yte
 
-
+# converts image into array and formats it into the same format as training
+# Note: Due to evaluation and being vague this might need to edited to your specifications
 def load_CIFAR10_image(image):
     X = np.array(image)
-    X = X.reshape(1, 3, 32, 32).transpose(0, 2, 3, 1).astype("float")
+    X = X.reshape(1, 3, 32, 32).transpose(0,2,3,1).astype("float")
     return X
 
+# Loads image and formats it 
 def load_CIFAR10_images(TROOT,ROOT):
     xs = []
     ys = []
@@ -68,6 +70,7 @@ def load_CIFAR10_images(TROOT,ROOT):
     Xte = np.concatenate(xs)
     return Xtr, Ytr, Xte
 
+# prints out confusion matrix
 def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
     labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
@@ -80,7 +83,7 @@ def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
     plt.xlabel('Predicted label')
     plt.savefig('CIFAR_10_confusion_matrix_'+ i + '.png')
 
-
+# prints our results into a nice confusion matrix
 def results(Y_pred, Yte):
     cm = confusion_matrix(Yte, Y_pred)
     title = "10NN Confusion Matrix"
@@ -95,7 +98,7 @@ def results(Y_pred, Yte):
     # plot_confusion_matrix(cm_norm, title, i)
 
 
-
+# The main knn function that uses the NearestNeighbour class in knn.py
 def run_knn():
     new = input('Testing with new undefined images? (y or n): ')
     if (new == 'y'):
@@ -117,10 +120,12 @@ def run_knn():
         # and now print the classification accuracy, which is the average number
         # of examples that are correctly predicted (i.e label matches)
         if (new != 'y'):
+            # Compute the accuracy between the actuals and the predictions
             acc = np.mean(Yte_predict == Yte)
             print('K-NN %d' % (k))
             print('accuracy: %f' % (acc))
-            results(Yte_predict,Yte)
+            # For graphing
+            # results(Yte_predict,Yte)
         
         # Print predictions to csv
     np.savetxt("cifar10_predictions.csv", Yte_predict, delimiter=",")

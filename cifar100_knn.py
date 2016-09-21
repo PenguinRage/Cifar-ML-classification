@@ -40,10 +40,11 @@ class NearestNeighbour(object):
             # sort the distance
             min_index = np.argsort(distances, -1,'mergesort')
 
-            # K-Nearest component
+            # class dictionaries to add classes and count values
             coarse_classes = {}
             fine_classes = {}
-
+            # take the min distances if class is in dictionary increment 1
+            # otherwise add to dictionary
             for j in range(K):
                 if self.ytr[min_index[j]] in fine_classes.keys():
                     fine_classes[self.ytr[min_index[j]]] += 1
