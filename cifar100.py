@@ -125,7 +125,7 @@ def run_knn():
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
-    for k in [10]:
+    for k in [1]:
         # create NearestNeighbour 
         nn = NearestNeighbour()
         # Train data
