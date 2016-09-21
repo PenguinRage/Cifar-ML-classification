@@ -49,16 +49,15 @@ class NearestNeighbour(object):
                     fine_classes[self.ytr[min_index[j]]] += 1
                 else:
                     fine_classes[self.ytr[min_index[j]]] = 1
-            
-            Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
-            """if self.ztr[min_index[j]] in coarse_classes.keys():
+
+                if self.ztr[min_index[j]] in coarse_classes.keys():
                     coarse_classes[self.ztr[min_index[j]]] += 1
                 else:
-                    coarse_classes[self.ztr[min_index[j]]] = 1"""
-            Zpred[i] = math.floor(Ypred[i]/5)
+                    coarse_classes[self.ztr[min_index[j]]] = 1
+
             # predict the label of the nearest example
-            #Zpred[i] = max(coarse_classes.items(), key = operator.itemgetter(1))[0]
-            #Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
+            Zpred[i] = max(coarse_classes.items(), key = operator.itemgetter(1))[0]
+            Ypred[i] = max(fine_classes.items(), key = operator.itemgetter(1))[0]
             print("Test case " + str(i) + ": \t Predicted: " + str(Ypred[i]) + "\t Predicted: " + str(Zpred[i]))
 
             # print(Ypred[i])

@@ -101,12 +101,12 @@ def plot_confusion_matrix(cm, title,i, cmap=plt.cm.Blues):
     plt.yticks(tick_marks, labels)
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.savefig('CIFAR_1_confusion_matrix_'+ i + '.png')
+    plt.savefig('CIFAR_10_confusion_matrix_'+ i + '.png')
 
 
 def results(Y_pred, Yte):
     cm = confusion_matrix(Yte, Y_pred)
-    title = "1NN Confusion Matrix"
+    title = "10NN Confusion Matrix"
     i= "normal"
     print(cm)
     plt.figure()
@@ -125,7 +125,7 @@ def run_knn():
     Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3)  # Xtr_rows become 50000 x 3072
     Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3)  # Xtr_rows become 10000 x 3072
 
-    for k in [1]:
+    for k in [10]:
         # create NearestNeighbour 
         nn = NearestNeighbour()
         # Train data
@@ -135,7 +135,7 @@ def run_knn():
         
         if (new != 'y'):
             fine_acc = np.mean(Yte_predict == Yte)
-            coarse_acc = np.mean(Zte_predict == Yte)
+            coarse_acc = np.mean(Zte_predict == Zte)
             print('K-NN %d' % (k))
             print('fine label accuracy: %f' % (fine_acc))
             print('coarse label accuracy: %f' % (coarse_acc))
