@@ -1,4 +1,4 @@
-# Machine Learning Classification on Cifar 10 and 100 images
+# Cifar 10 & 100 image classification
 Machine Learning on Cifar 10 and 100.
 ## Description
 This is a quick readme file discussing the specifications for the assignment submitted.
