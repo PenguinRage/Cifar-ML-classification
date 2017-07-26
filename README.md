@@ -1,4 +1,4 @@
-# INFO3406_Assignment1
+# Machine Learning Classification on Cifar 10 and 100 images
 Machine Learning on Cifar 10 and 100.
 ## Description
 This is a quick readme file discussing the specifications for the assignment submitted.
